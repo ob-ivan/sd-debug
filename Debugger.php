@@ -35,6 +35,12 @@ class Debugger {
         }
     }
 
+    public function printTrace(...$values) {
+        if ($this->isDebug) {
+            print new \Exception($this->stringify($values));
+        }
+    }
+
     private function makeLogString(array $values) {
         return implode(': ', array_filter([$this->getCallerInfo(), $this->stringify($values)]));
     }
