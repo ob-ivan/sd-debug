@@ -2,6 +2,11 @@
 namespace SD\Debugger;
 
 class Debugger {
+    const SERIALIZER_PRINT_R     = 'print_r';
+    const SERIALIZER_VAR_EXPORT  = 'var_export';
+    const SERIALIZER_SERIALIZE   = 'serialize';
+    const SERIALIZER_JSON_ENCODE = 'json_encode';
+
     private static $instance;
     private $isDebug = false;
 
@@ -29,6 +34,12 @@ class Debugger {
         }
     }
 
+    public function preExport(...$values) {
+        if ($this->isDebug) {
+            print '<pre>' . $this->makeLogString($values, self::SERIALIZER_VAR_EXPORT) . "</pre>\n";
+        }
+    }
+
     public function log(...$values) {
         if ($this->isDebug) {
             error_log($this->makeLogString($values));
@@ -41,8 +52,8 @@ class Debugger {
         }
     }
 
-    private function makeLogString(array $values) {
-        return implode(': ', array_filter([$this->getCallerInfo(), $this->stringify($values)]));
+    private function makeLogString(array $values, $serializerName = self::SERIALIZER_PRINT_R) {
+        return implode(': ', array_filter([$this->getCallerInfo(), $this->stringify($values, $serializerName)]));
     }
 
     private function getCallerInfo(): string {
@@ -59,13 +70,22 @@ class Debugger {
         ]);
     }
 
-    private function stringify($values): string {
+    private function stringify($values, $serializerName): string {
         return implode(
             ', ',
             array_map(
-                function ($value) { return print_r($value, true); },
+                $this->getSerializerMethod($serializerName),
                 $values
             )
         );
+    }
+
+    private function getSerializerMethod($serializerName): callable {
+        switch ($serializerName) {
+            case self::SERIALIZER_PRINT_R:      return function ($value) { return print_r($value, true); };
+            case self::SERIALIZER_VAR_EXPORT:   return function ($value) { return var_export($value, true); };
+            case self::SERIALIZER_SERIALIZE:    return function ($value) { return serialize($value); };
+            case self::SERIALIZER_JSON_ENCODE:  return function ($value) { return json_encode($value); };
+        }
     }
 }
