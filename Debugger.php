@@ -7,17 +7,18 @@ class Debugger {
     const SERIALIZER_SERIALIZE   = 'serialize';
     const SERIALIZER_JSON_ENCODE = 'json_encode';
 
-    private static $instance;
-    private $isDebug = false;
+    private static $instances = [];
+    private $isDebug;
 
-    public static function getInstance() {
-        if (!self::$instance) {
-            self::$instance = new self();
+    public static function getInstance($isDebug) {
+        if (!isset(self::$instances[$isDebug])) {
+            self::$instances[$isDebug] = new self($isDebug);
         }
-        return self::$instance;
+        return self::$instances[$isDebug];
     }
 
-    private function __construct() {
+    private function __construct($isDebug) {
+        $this->isDebug = $isDebug;
     }
 
     public function enable(bool $isDebug) {
