@@ -1,4 +1,6 @@
 <?php
+use SD\Debugger\Debugger;
+
 /**
  * Usage:
  *  debug()->enable(isset($_GET['debug']));
