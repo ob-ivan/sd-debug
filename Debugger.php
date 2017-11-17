@@ -53,6 +53,12 @@ class Debugger {
         }
     }
 
+    public function logTrace(...$values) {
+        if ($this->isDebug) {
+            error_log(new \Exception($this->stringify($values, self::SERIALIZER_PRINT_R)));
+        }
+    }
+
     private function makeLogString(array $values, $serializerName = self::SERIALIZER_PRINT_R) {
         return implode(': ', array_filter([$this->getCallerInfo(), $this->stringify($values, $serializerName)]));
     }
