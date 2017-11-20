@@ -49,7 +49,7 @@ class Debugger {
 
     public function printTrace(...$values) {
         if ($this->isDebug) {
-            print new \Exception($this->stringify($values));
+            print new \Exception($this->stringify($values, self::SERIALIZER_PRINT_R));
         }
     }
 
