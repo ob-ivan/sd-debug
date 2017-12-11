@@ -47,6 +47,12 @@ class Debugger {
         }
     }
 
+    public function logExport(...$values) {
+        if ($this->isDebug) {
+            error_log($this->makeLogString($values, self::SERIALIZER_VAR_EXPORT));
+        }
+    }
+
     public function printTrace(...$values) {
         if ($this->isDebug) {
             print new \Exception($this->stringify($values, self::SERIALIZER_PRINT_R));
