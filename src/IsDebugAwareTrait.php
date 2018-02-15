@@ -1,8 +1,9 @@
 <?php
-namespace SD\Debugger;
+namespace SD\Debug;
 
-trait IsDebugAwareTrait {
-    private $autoDeclareIsDebug = 'isDebug';
+trait IsDebugAwareTrait
+{
+    protected $autoDeclareIsDebug = 'isDebug';
     private $isDebug;
 
     public function setIsDebug(bool $isDebug) {

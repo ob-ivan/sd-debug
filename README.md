@@ -2,7 +2,7 @@
 Installation
 ============
 ```bash
-composer require ob-ivan/sd-debugger
+composer require ob-ivan/sd-debug
 ```
 
 

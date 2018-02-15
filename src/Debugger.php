@@ -1,7 +1,8 @@
 <?php
-namespace SD\Debugger;
+namespace SD\Debug;
 
-class Debugger {
+class Debugger
+{
     const SERIALIZER_PRINT_R     = 'print_r';
     const SERIALIZER_VAR_EXPORT  = 'var_export';
     const SERIALIZER_SERIALIZE   = 'serialize';
