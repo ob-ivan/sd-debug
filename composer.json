@@ -1,0 +1,12 @@
+{
+    "name": "ob-ivan/sd-debugger",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "SD\\Debugger\\": "src/"
+        },
+        "files": ["src/init.php"]
+    }
+}
